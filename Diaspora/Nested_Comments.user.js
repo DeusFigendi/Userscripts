@@ -197,7 +197,7 @@ function stuff_to_do_after_a_short_while() {
        mystyle_content += ".icons-replycomment {\n    cursor:pointer;\n}\n\n\n\n\n";
        mystyle_content += ".comment.media:hover .controls .comment_reply{\n          filter:alpha(opacity=30);\n  -moz-opacity:0.3;\n -khtml-opacity:0.3;\n opacity:0.3\n}\n\n";
        mystyle_content += ".comment.media:hover .controls .comment_reply:hover{\n    filter:alpha(opacity=100);\n -moz-opacity:1;\n   -khtml-opacity:1;\n   opacity:1\n}\n\n";
-       mystyle_content += ".comment.media > div > .comment.media{\n    margin-left:50px; border-left-style:dashed;\n}\n\n";
+       mystyle_content += ".comment.media > div > .comment.media{\n    margin-left:50px;\n      border-left:1px solid #CCC;\n}\n\n";
             
        mystyle.appendChild(document.createTextNode(mystyle_content));
        document.getElementsByTagName("head")[0].appendChild(mystyle);
