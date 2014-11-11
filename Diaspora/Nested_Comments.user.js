@@ -2,6 +2,7 @@
 // @name        Diaspora nested comments
 // @namespace   deusfigendi
 // @description Generates and shows nested comments in Diaspora
+// @downloadURL https://github.com/DeusFigendi/Userscripts/raw/master/Diaspora/Nested_Comments.user.js
 // @include     https://pod.geraspora.de/*
 // @include     http*://joindiaspora.com/*
 // @include     http*://diasp.org/*
@@ -38,7 +39,7 @@
 // @include     http*://friends.dostmusik.de/*
 // @include     http*://social.mathaba.net/*
 // @include     http*://nerdpol.ch/*
-// @version     1
+// @version     1.1
 // @grant       none
 // ==/UserScript==
 
@@ -54,6 +55,10 @@ function local2global(local_id) {
     var post_content = JSON.parse(requestobject.responseText);
     
     return(post_content.guid);
+}
+
+function shorten_name(old_name) {
+    return old_name;
 }
 
 function reply_to_this(rply_btn) {
@@ -94,11 +99,40 @@ function reply_to_this(rply_btn) {
        //this seems to be the local ID, should get the global one.
         post_id = local2global(post_id);
     }
-        
+            
+    // okay, we know the global ID and the comments ID it would be usefull to know what's selected and the nickname of the author.
     
-    //need the global ID here.
+    var selectedText =nestedcommentsglobalvariable_selectedtext;
     
-    comment_area.value = "<sup>[aw2](/posts/"+post_id+"#"+comment_id+")</sup>\n\n";
+    var authorsName = comment_element.getElementsByClassName("author")[0].firstChild.data.replace(/(^\s*|\s*$)/g,"");
+    
+    //fine, we can generate the URL, we have the authors name and the content of the selection.
+    //Let's decide how the link will look like.
+    
+    if ((selectedText.length > 1) && (selectedText.length < 30)) {
+        var linktext = selectedText;
+        var linktitle = "";
+    } else if ((selectedText.length >= 30) && (selectedText.length < 100)) {
+        var linktext = "@"+authorsName;
+        var linktitle = " \""+selectedText+"\"";
+    } else if ((selectedText.length >= 100)) {
+        var linktext = "@"+authorsName;
+        var linktitle = " \""+selectedText.slice(0,50)+"…\"";
+    } else if ((authorsName.length >= 20)) {
+        var linktext = "@"+shorten_name(authorsName);
+        var linktitle = "";
+    } else {
+        var linktext = "@"+authorsName;
+        var linktitle = "";        
+    }
+    
+    //comment_area.value = "<sup>[@"+authorsName+"](/posts/"+post_id+"#"+comment_id+" \""+selectedText+"\")</sup>\n\n";
+    if (linktext.length > 20) {
+        comment_area.value = "<sub><sup>["+linktext+"](/posts/"+post_id+"#"+comment_id+linktitle+")</sup></sub>\n\n";
+    } else {       
+        comment_area.value = "<sup>["+linktext+"](/posts/"+post_id+"#"+comment_id+linktitle+")</sup>\n\n";
+    }
+    
     comment_area.focus();
 }
 
@@ -115,6 +149,9 @@ function add_reply_btn(element) {
        a.setAttribute("data-type","comment");
     
        a.addEventListener("click",function(){ reply_to_this(this); },false);
+       a.addEventListener("mouseover",function(){ nestedcommentsglobalvariable_selectedtext = window.getSelection().getRangeAt(0).toString().replace(/\s+/g," "); },false);
+        
+        
     
        var div = document.createElement("div");
        div.className = "icons-replycomment";
@@ -167,6 +204,7 @@ function stuff_to_do_after_a_short_while() {
     
        
        if ((document.getElementById("main_stream"))) {
+           /*
           var list_of_comments = document.getElementsByClassName("comments");
           var list_of_comments2 = null;
           var list_of_comments3 = null;
@@ -188,7 +226,9 @@ function stuff_to_do_after_a_short_while() {
                  }
              }
           }
+           */
        } else if ((document.getElementById("single-post-interactions"))) {
+           /*
           var list_of_comments = document.getElementsByClassName("comments");
           var list_of_comments2 = list_of_comments;
           var list_of_comments3 = null;        
@@ -207,6 +247,7 @@ function stuff_to_do_after_a_short_while() {
                     }
                  }
              }
+       */
           
        }
     } else if (false) {
@@ -214,7 +255,7 @@ function stuff_to_do_after_a_short_while() {
     }
 }
 
-function stuff_to_do_over_and_over_again(){
+function stuff_to_do_over_and_over_again() {
            
        if ((document.getElementById("main_stream"))) {
           var list_of_comments = document.getElementsByClassName("comments");
@@ -258,9 +299,11 @@ function stuff_to_do_over_and_over_again(){
                  }
              }
           
-       }    
+       } else {
+          //do nothing
+       }
 }
 
 window.setTimeout(stuff_to_do_after_a_short_while,1888);
-window.setTimeout(stuff_to_do_after_a_short_while,1999);
-window.setInterval(stuff_to_do_after_a_short_while,19999);
+window.setTimeout(stuff_to_do_over_and_over_again,1999);
+window.setInterval(stuff_to_do_over_and_over_again,19999);
