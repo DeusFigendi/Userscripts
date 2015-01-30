@@ -52,7 +52,8 @@
 // @include        http*://diaspora.chouchoune.fr/*
 // @include        http*://alt.md/*
 // @include        http*://lksnyder0.mooo.com/*
-// @version        1.1.1
+// @include        http*://wk3.org/*
+// @version        1.1.2
 // @grant          none
 // ==/UserScript==
 
@@ -84,7 +85,7 @@ function replace_this_href(a_element) {
 					if (xmlHttp.readyState == 4) {
 						var this_posting = json_parse(xmlHttp.responseText);
 						if (document.getElementById('uniqueposttimestamp_'+this_posting.id)) {
-							document.getElementById('uniqueposttimestamp_'+this_posting.id).href = document.getElementById('uniqueposttimestamp_'+this_posting.id).href.replace(/\d+/,this_posting.guid);
+							document.getElementById('uniqueposttimestamp_'+this_posting.id).href = document.getElementById('uniqueposttimestamp_'+this_posting.id).href.replace(/\/posts\/\d+/,'/posts/'+this_posting.guid);
 							document.getElementById('uniqueposttimestamp_'+this_posting.id).parentNode.appendChild(document.createElement('br'));
 							document.getElementById('uniqueposttimestamp_'+this_posting.id).parentNode.appendChild(document.createTextNode('['+strip_markdown(this_posting.title)+'](/posts/'+this_posting.guid+')'));
 							document.getElementById('uniqueposttimestamp_'+this_posting.id).id = 'uniqueposttimestamp_'+this_posting.guid;
