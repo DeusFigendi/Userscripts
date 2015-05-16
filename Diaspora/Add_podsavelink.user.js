@@ -53,6 +53,8 @@
 // @include        http*://alt.md/*
 // @include        http*://lksnyder0.mooo.com/*
 // @include        http*://wk3.org/*
+// @include        http*://diaspora-fr.org/*
+// @include        http*://framasphere.org/*
 // @version        1.1.2
 // @grant          none
 // ==/UserScript==
