@@ -5,7 +5,7 @@
 // @downloadURL http://userscripts.org/scripts/source/171283.user.js
 // @updateURL   http://userscripts.org/scripts/source/171283.user.js
 // @include     https://pod.geraspora.de/stream
-// @version     1.1.1
+// @version     1.1.2
 
 // @include		http*://aptitudeworks.com/*
 // @include		http*://caray.net/*
@@ -162,7 +162,7 @@ function quote(quote_btn,clickevent) {
 			
 			post_date = new Date(post_date);
 						
-			var return_content = "\n\n\n\n> ----\n\n<strong> @{![Avatar]("+author_avatar+") "+author_name+" ; "+author_id+"} </strong><sup> ["+post_date.toLocaleString()+"](/posts/"+post_guid+")</sup>\n\n";
+			var return_content = "\n\n\n\n> ----\n\n<strong> ![Avatar]("+author_avatar+") @{ "+author_name+" ; "+author_id+"} </strong><sup> ["+post_date.toLocaleString()+"](/posts/"+post_guid+")</sup>\n\n";
 			
 			if (photos.length > 0) {
 				return_content += "> [ !["+photos[0].guid+"]("+photos[0].sizes.large+") ]("+photos[0].sizes.large+")\n\n> ";
