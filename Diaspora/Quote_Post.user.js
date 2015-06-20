@@ -5,7 +5,7 @@
 // @downloadURL http://userscripts.org/scripts/source/171283.user.js
 // @updateURL   http://userscripts.org/scripts/source/171283.user.js
 // @include     https://pod.geraspora.de/stream
-// @version     1.1.2
+// @version     1.1.3
 
 // @include		http*://aptitudeworks.com/*
 // @include		http*://caray.net/*
@@ -426,10 +426,18 @@ function check_if_singlepostview() {
 	}
 }
 
+function add_quote_stylesheet() {
+	var my_style = ".raq_extended {\n display:none;\n}"
+	var my_styleelement = document.createElement("style");
+	my_styleelement.appendChild(document.createTextNode(my_style));
+	document.getElementsByTagName("head")[0].appendChild(my_styleelement);
+}
+
 
 	//alert("1");
 if (document.getElementById("publisher")) {
 	//alert("2");
+	window.setTimeout(add_quote_stylesheet,700);
 	window.setTimeout(add_quote_buttons,1700);
 	window.setInterval(add_quote_buttons,10500);
 	//alert("3");
