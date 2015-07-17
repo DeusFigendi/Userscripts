@@ -5,7 +5,10 @@
 // @downloadURL http://userscripts.org/scripts/source/171283.user.js
 // @updateURL   http://userscripts.org/scripts/source/171283.user.js
 // @include     https://pod.geraspora.de/stream
-// @version     1.1.3
+// @version     1.1.4
+
+// @grant       GM_getValue
+// @grant       GM_setValue
 
 // @include		http*://aptitudeworks.com/*
 // @include		http*://caray.net/*
@@ -114,6 +117,96 @@ function flash_notice(message) {
 		document.getElementsByTagName("body")[0].insertBefore(new_flash_notice,document.getElementsByTagName("body")[0].firstChild);
 }
 
+function df_addoption(namespace,scripttitle,keyname,valuetype,list,description) {
+	
+	// valuetype is integer:
+	// 0 = unknown/unset
+	// 1 = boolean (checkbox)
+	// 2 = integer (list may contain an Array of min/max)
+	// 3 = selection (list containt an Array of options)
+	// 4 = string (input) list may contain a max-length
+	// 11 = date
+	// 12 = time
+	// 13 = color
+	// 14 = something
+	
+	if (true) {
+		var div1 = document.createElement('div');
+		div1.classList.add('row-fluid');
+	
+		var div2 = document.createElement('div');
+		div2.classList.add('span-12');
+	
+		var h3 = document.createElement('h3');
+		h3.id = namespace;
+		h3.appendChild(document.createTextNode(scripttitle));
+		
+		var form0 = document.createElement('form');
+		form0.id = namespace+'_form';
+		form0.classList.add('edit_user');
+		
+		var hr0 = document.createElement('hr');
+		
+		
+		
+		div2.appendChild(h3);
+		div2.appendChild(form0);
+		div1.appendChild(div2);
+		
+		
+		
+		var target_container = document.getElementById('stream-preferences');
+		while (!target_container.classList.contains('row-fluid')) {
+			target_container = target_container.parentNode;
+		}
+		
+		target_container.parentNode.insertBefore(div1,target_container);
+		target_container.parentNode.insertBefore(hr0,target_container);
+		
+	}
+	
+	var div3 = document.createElement('div');
+	div3.id = namespace+'_prefs';
+	
+	var label0 = document.createElement('label');
+	label0.classList.add('checkbox');
+	label0.setAttribute('for',namespace+'__'+keyname);
+	
+	if (valuetype) {
+		if (valuetype == 1) {
+			var input0 = document.createElement('input');
+			input0.id = namespace+'__'+keyname;
+			input0.type = 'checkbox';
+			if (parseInt(GM_getValue(namespace+'__'+keyname,false))) {
+				input0.setAttribute('checked','checked');
+			}
+			
+			input0.addEventListener('change',function(e){
+				if (this.checked) {
+					GM_setValue(this.id,'1');
+				} else {
+					GM_setValue(this.id,'0');
+				}
+			},false);
+			
+		} else if (valuetype == 2) {
+			var input0 = document.createElement('span');
+			input0.id = namespace+'__'+keyname+'_integer';
+		} else {
+			var input0 = document.createElement('span');
+			input0.id = namespace+'__'+keyname+'_'+valuetype;
+		}
+	
+		label0.appendChild(input0);
+	}
+	label0.appendChild(document.createTextNode(description));
+	
+	div3.appendChild(label0);
+	
+	div2.appendChild(div3);
+	
+	
+}
 
 
 function quote(quote_btn,clickevent) {
@@ -427,10 +520,17 @@ function check_if_singlepostview() {
 }
 
 function add_quote_stylesheet() {
-	var my_style = ".raq_extended {\n display:none;\n}"
+	var my_style = "\n"
+	if (parseInt(GM_getValue('df_quote1__hide_reshare',false))) {
+		my_style += ".raq_extended {\n display:none;\n}"
+	}
 	var my_styleelement = document.createElement("style");
 	my_styleelement.appendChild(document.createTextNode(my_style));
 	document.getElementsByTagName("head")[0].appendChild(my_styleelement);
+}
+
+function do_settings_stuff() {
+	df_addoption('df_quote1','Reshare as Quote (Userscript)','hide_reshare',1,null,'remove reshare button');
 }
 
 
@@ -440,7 +540,9 @@ if (document.getElementById("publisher")) {
 	window.setTimeout(add_quote_stylesheet,700);
 	window.setTimeout(add_quote_buttons,1700);
 	window.setInterval(add_quote_buttons,10500);
-	//alert("3");
+	//alert("3");#
+} else if (document.getElementById("settings_nav")) {	
+	window.setTimeout(do_settings_stuff,1111);
 } else {
 	//alert("2.2");
 	window.setTimeout(check_if_singlepostview,1699);
