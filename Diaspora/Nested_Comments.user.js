@@ -19,6 +19,7 @@
 // @include     http*://mipod.us/*
 // @include     http*://friendica.eu/*
 // @include     http*://pod.sd.vc/*
+// @include     http*://sechat.org/*
 // @include     http*://socializer.cc/*
 // @include     http*://frndk.de/*
 // @include     http*://whompify.com/*
