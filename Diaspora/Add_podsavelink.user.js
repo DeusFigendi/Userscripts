@@ -34,6 +34,7 @@
 // @include        http*://diaspora.xn--grne-lampe-beb.de/*
 // @include        http*://dpod.se/*
 // @include        http*://diaspora.isnap.gr/*
+// @include        http*://sechat.org/*
 // @include        http*://soc.ragriz.net/*
 // @include        http*://pod.chrisi01.de/*
 // @include        http*://foobar.cx/*

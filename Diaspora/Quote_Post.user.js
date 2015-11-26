@@ -75,6 +75,7 @@
 // @include		http*://podmob.net/*
 // @include		http*://rescuenetwork.net/*
 // @include		http*://rootpod.org/*
+// @include		http*://sechat.org/*
 // @include		http*://snuckeys.com/*
 // @include		http*://social.cooleysekula.net/*
 // @include		http*://social.cooleysekula.net/*

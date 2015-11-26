@@ -27,6 +27,7 @@
 // @include     http*://diapod.net/*
 // @include     http*://www.optimistisch.de/*
 // @include     http*://diaspora.linuxmaniac.net/*
+// @include     http*://sechat.org/*
 // @include     http*://spyurk.am/*
 // @include     http*://fabdofriends.de/*
 // @include     http*://sxspora.de/*
