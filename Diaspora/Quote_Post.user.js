@@ -30,6 +30,7 @@
 // @include		http*://diasp.kr/*
 // @include		http*://diasp.org/*
 // @include		http*://diaspod.fr/*
+// @include		http*://diaspora-fr.org/*
 // @include		http*://diaspora.aueb.gr/*
 // @include		http*://diaspora.delaszy.eu/*
 // @include		http*://diaspora.digitalignition.net/*
@@ -40,6 +41,7 @@
 // @include		http*://diaspora.voodoo-arts.net/*
 // @include		http*://failure.net/*
 // @include		http*://flokk.no/*
+// @include		http*://framasphere.org/*
 // @include		http*://free-beer.ch/*
 // @include		http*://freedom.praxis.pw/*
 // @include		http*://greeninja.co.uk/*
