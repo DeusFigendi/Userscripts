@@ -42,7 +42,7 @@
 // @include     http*://nerdpol.ch/*
 // @include     http*://framasphere.org/*
 // @include     http*://diaspora-fr.org/*
-// @version     1.1
+// @version     1.2
 // @grant       none
 // ==/UserScript==
 
@@ -81,6 +81,8 @@ function reply_to_this(rply_btn) {
     var post_element = comment_area;
     comment_area = comment_area.getElementsByClassName("comment_box")[0];
     
+    //comment_area.style.backgroundColor = "#ff0";
+    
     if ((document.getElementById("main_stream"))) {
        while (post_element.classList.contains("stream_element") == false) {
            post_element = post_element.parentNode;
@@ -105,9 +107,11 @@ function reply_to_this(rply_btn) {
             
     // okay, we know the global ID and the comments ID it would be usefull to know what's selected and the nickname of the author.
     
-    var selectedText =nestedcommentsglobalvariable_selectedtext;
+    //var selectedText = ".";
+    var selectedText = nestedcommentsglobalvariable_selectedtext;
     
-    var authorsName = comment_element.getElementsByClassName("author")[0].firstChild.data.replace(/(^\s*|\s*$)/g,"");
+    
+    var authorsName = comment_element.getElementsByClassName("author-name")[1].firstChild.data.replace(/(^\s*|\s*$)/g,"");
     
     //fine, we can generate the URL, we have the authors name and the content of the selection.
     //Let's decide how the link will look like.
@@ -136,6 +140,7 @@ function reply_to_this(rply_btn) {
         comment_area.value = "<sup>["+linktext+"](/posts/"+post_id+"#"+comment_id+linktitle+")</sup>\n\n";
     }
     
+    //comment_area.style.backgroundColor = "#f00";
     comment_area.focus();
 }
 
@@ -152,19 +157,35 @@ function add_reply_btn(element) {
        a.setAttribute("data-type","comment");
     
        a.addEventListener("click",function(){ reply_to_this(this); },false);
-       a.addEventListener("mouseover",function(){ nestedcommentsglobalvariable_selectedtext = window.getSelection().getRangeAt(0).toString().replace(/\s+/g," "); },false);
+       //a.addEventListener("mouseover",function(){ nestedcommentsglobalvariable_selectedtext = window.getSelection().getRangeAt(0).toString().replace(/\s+/g," "); },false);
+       a.addEventListener("mouseover",function(){ nestedcommentsglobalvariable_selectedtext = getSelectionText().replace(/\s+/g," "); },false);
         
         
     
-       var div = document.createElement("div");
+       var div = document.createElement("i");
        div.className = "icons-replycomment";
         
        a.appendChild(div);
     
-       element.getElementsByClassName("controls")[0].appendChild(a);
        //element.style.backgroundColor = "#999";
+       //element.getElementsByClassName("controls")[0].appendChild(a);
+       element.getElementsByClassName("control-icons")[0].appendChild(a);
     }
 }
+
+function getSelectionText() {
+	// I took this function from here: http://stackoverflow.com/questions/5379120/get-the-highlighted-selected-text
+    var text = "";
+    if (window.getSelection) {
+        text = window.getSelection().toString();
+    } else if (document.selection && document.selection.type != "Control") {
+        text = document.selection.createRange().text;
+    }
+    return text;
+}
+
+
+
 
 function move_comment(element) {
     if (!element.classList.contains("nestedcomments_proceded")) {
@@ -195,9 +216,13 @@ function stuff_to_do_after_a_short_while() {
        var mystyle_content = ".comment.media .controls .comment_reply {\n    transition: opacity 0.1s linear 0s;\n    opacity: 0;\n}\n\n";
        mystyle_content += ".controls .comment_reply {\n    display: inline-block;\n}\n\n";
        mystyle_content += ".controls .comment_reply .icons-replycomment {\n    height: 14px;\n    width: 17px;\n}\n\n\n";
+       /*
        mystyle_content += ".icons-replycomment {\n    background: url('https://pod.geraspora.de/assets/icons-s2a552afa2f-775c31119917cd66c202c05de7d3e728.png') no-repeat scroll 0% 0% transparent;\n}\n\n\n";
        mystyle_content += ".icons-replycomment {\n    background-position: 0px -2843px;\n}\n\n\n\n\n";
+       */
        mystyle_content += ".icons-replycomment {\n    cursor:pointer;\n}\n\n\n\n\n";
+       //mystyle_content += ".icons-replycomment::before {\n    content: '\\2bb1';\n}\n\n\n";
+       mystyle_content += ".icons-replycomment::before {\n    content: '\\267b';\n}\n\n\n";
        mystyle_content += ".comment.media:hover .controls .comment_reply{\n          filter:alpha(opacity=30);\n  -moz-opacity:0.3;\n -khtml-opacity:0.3;\n opacity:0.3\n}\n\n";
        mystyle_content += ".comment.media:hover .controls .comment_reply:hover{\n    filter:alpha(opacity=100);\n -moz-opacity:1;\n   -khtml-opacity:1;\n   opacity:1\n}\n\n";
        mystyle_content += ".comment.media > div > .comment.media{\n    margin-left:50px;\n      border-left:1px solid #CCC;\n}\n\n";

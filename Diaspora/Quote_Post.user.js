@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name        Quote Post
 // @namespace   deusfigendi
 // @description Quotes instead of resharing
@@ -278,10 +278,27 @@ function quote(quote_btn,clickevent) {
 			document.getElementById("publisher_textarea_wrapper").classList.add("active");
 			
 			
-			document.getElementById("status_message_fake_text").value = return_content;
+			if (document.getElementById("status_message_fake_text")) {
+				var legacy_code_fake_text_exists = true;
+			} else {
+				var legacy_code_fake_text_exists = false;
+			}
+			
+			if (legacy_code_fake_text_exists) {
+				document.getElementById("status_message_fake_text").value = return_content;
+			}
 			document.getElementById("status_message_text").value = return_content;
 			
-			document.getElementById("status_message_fake_text").style.height = (return_content.match(/\n/g).length * 20)+"px";
+			
+			
+			if (legacy_code_fake_text_exists) {
+				document.getElementById("status_message_fake_text").style.height = (return_content.match(/\n/g).length * 20)+"px";
+			} else {
+				document.getElementById("status_message_text").style.height = (return_content.match(/\n/g).length * 20)+"px";
+			}
+			
+			
+			
 			
 			var aspect_dropdown = document.getElementsByClassName("public_toggle")[0].getElementsByClassName("dropdown_list")[0];
 			for (var i = 0; i < aspect_dropdown.childNodes.length; i++) {
@@ -301,7 +318,12 @@ function quote(quote_btn,clickevent) {
 			
 			document.getElementsByName("aspect_ids[]")[0].value = "public";
 			
-			document.getElementById("status_message_fake_text").focus();
+			if (legacy_code_fake_text_exists) {
+				document.getElementById("status_message_fake_text").focus();
+			} else {
+				document.getElementById("status_message_text").focus();
+			}
+			
 			
 			
 			
