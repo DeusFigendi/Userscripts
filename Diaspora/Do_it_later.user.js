@@ -39,6 +39,8 @@
 // @include     http*://friends.dostmusik.de/*
 // @include     http*://social.mathaba.net/*
 // @include     http*://nerdpol.ch/*
+// @include     http*://framasphere.org/*
+// @include     http*://diaspora-fr.org/*
 // @version     1.6.12
 // @grant       GM_getValue
 // @grant       GM_setValue
