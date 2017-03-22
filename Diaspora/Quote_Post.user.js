@@ -2,10 +2,10 @@
 // @name        Quote Post
 // @namespace   deusfigendi
 // @description Quotes instead of resharing
-// @downloadURL http://userscripts.org/scripts/source/171283.user.js
-// @updateURL   http://userscripts.org/scripts/source/171283.user.js
 // @include     https://pod.geraspora.de/stream
-// @version     1.1.4
+// @downloadURL https://github.com/DeusFigendi/Userscripts/raw/master/Diaspora/Quote_Post.user.js
+// @updateURL   https://github.com/DeusFigendi/Userscripts/raw/master/Diaspora/Quote_Post.user.js
+// @version     1.1.5
 
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -30,6 +30,7 @@
 // @include		http*://diasp.kr/*
 // @include		http*://diasp.org/*
 // @include		http*://diaspod.fr/*
+// @include		http*://diaspora-fr.org/*
 // @include		http*://diaspora.aueb.gr/*
 // @include		http*://diaspora.delaszy.eu/*
 // @include		http*://diaspora.digitalignition.net/*
@@ -40,6 +41,7 @@
 // @include		http*://diaspora.voodoo-arts.net/*
 // @include		http*://failure.net/*
 // @include		http*://flokk.no/*
+// @include		http*://framasphere.org/*
 // @include		http*://free-beer.ch/*
 // @include		http*://freedom.praxis.pw/*
 // @include		http*://greeninja.co.uk/*
@@ -95,6 +97,15 @@
 
 
 // ==/UserScript==
+
+/*
+
+old:
+ 
+// @downloadURL http://userscripts.org/scripts/source/171283.user.js
+// @updateURL   http://userscripts.org/scripts/source/171283.user.js
+
+*/
 
 //json-sans-eval from https://code.google.com/p/json-sans-eval/ by Mike Samuel <mikesamuel@gmail.com>
 window.jsonParse=function(){var r="(?:-?\\b(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\\b)",k='(?:[^\\0-\\x08\\x0a-\\x1f"\\\\]|\\\\(?:["/\\\\bfnrt]|u[0-9A-Fa-f]{4}))';k='(?:"'+k+'*")';var s=new RegExp("(?:false|true|null|[\\{\\}\\[\\]]|"+r+"|"+k+")","g"),t=new RegExp("\\\\(?:([^u])|u(.{4}))","g"),u={'"':'"',"/":"/","\\":"\\",b:"\u0008",f:"\u000c",n:"\n",r:"\r",t:"\t"};function v(h,j,e){return j?u[j]:String.fromCharCode(parseInt(e,16))}var w=new String(""),x=Object.hasOwnProperty;return function(h,
