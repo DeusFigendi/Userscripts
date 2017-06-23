@@ -5,7 +5,7 @@
 // @include     https://pod.geraspora.de/stream
 // @downloadURL https://github.com/DeusFigendi/Userscripts/raw/master/Diaspora/Quote_Post.user.js
 // @updateURL   https://github.com/DeusFigendi/Userscripts/raw/master/Diaspora/Quote_Post.user.js
-// @version     1.1.5
+// @version     1.1.6
 
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -542,7 +542,7 @@ function check_if_singlepostview() {
 		//quote_btn.setAttribute("rel","auth-required");
 		quote_btn.setAttribute("data-original-title","quote this post");
 		var quote_btnimg = document.createElement("i");
-		quote_btnimg.className = "entypo comment gray large";
+		quote_btnimg.className = "entypo-comment gray large";
 		quote_btn.appendChild(quote_btnimg);
 		
 		quote_btn.addEventListener("click",function() { create_post_form(); },false);
