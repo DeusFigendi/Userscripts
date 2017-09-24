@@ -1,11 +1,11 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name        Quote Post
 // @namespace   deusfigendi
 // @description Quotes instead of resharing
 // @include     https://pod.geraspora.de/stream
 // @downloadURL https://github.com/DeusFigendi/Userscripts/raw/master/Diaspora/Quote_Post.user.js
 // @updateURL   https://github.com/DeusFigendi/Userscripts/raw/master/Diaspora/Quote_Post.user.js
-// @version     1.1.6
+// @version     1.1.7
 
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -267,7 +267,7 @@ function quote(quote_btn,clickevent) {
 			
 			post_date = new Date(post_date);
 						
-			var return_content = "\n\n\n\n> ----\n\n<strong> ![Avatar]("+author_avatar+") @{ "+author_name+" ; "+author_id+"} </strong><sup> ["+post_date.toLocaleString()+"](/posts/"+post_guid+")</sup>\n\n";
+			var return_content = "\n\n\n\n ----\n\n<strong> ![Avatar]("+author_avatar+") @{ "+author_name+" ; "+author_id+"} </strong><sup> ["+post_date.toLocaleString()+"](/posts/"+post_guid+")</sup>\n\n";
 			
 			if (photos.length > 0) {
 				return_content += "> [ !["+photos[0].guid+"]("+photos[0].sizes.large+") ]("+photos[0].sizes.large+")\n\n> ";
@@ -281,29 +281,40 @@ function quote(quote_btn,clickevent) {
 			//post_content = post_content.replace(/(^|\n)/g,"$1\> ");
 			
 			//alert(post_content);
-			
-			
+			//console.log('284');			
 			document.getElementById("publisher").classList.remove("closed");
-			document.getElementById("publisher_textarea_wrapper").classList.add("active");
-			
-			
+			//console.log('286');
+			if(document.getElementById("publisher-textarea-wrapper")) {
+				document.getElementById("publisher-textarea-wrapper").classList.add("active");
+			} else if(document.getElementById("publisher_textarea_wrapper")) {
+				document.getElementById("publisher_textarea_wrapper").classList.add("active");
+			}
+			//console.log('288');
+			//document.getElementById("md-editor").classList.add("active");
+			//console.log('290');
 			if (document.getElementById("status_message_fake_text")) {
 				var legacy_code_fake_text_exists = true;
+				//console.log('293');
 			} else {
 				var legacy_code_fake_text_exists = false;
+				//console.log('296');
 			}
 			
 			if (legacy_code_fake_text_exists) {
 				document.getElementById("status_message_fake_text").value = return_content;
+				//console.log('301');
 			}
 			document.getElementById("status_message_text").value = return_content;
-			
+
+			//console.log('305');
 			
 			
 			if (legacy_code_fake_text_exists) {
 				document.getElementById("status_message_fake_text").style.height = (return_content.match(/\n/g).length * 20)+"px";
+				//console.log('310');
 			} else {
-				document.getElementById("status_message_text").style.height = (return_content.match(/\n/g).length * 20)+"px";
+				document.getElementById("status_message_text").style.height = (return_content.match(/\n/g).length * 20)+"px";				
+				//console.log('313');
 			}
 			
 			
@@ -391,7 +402,7 @@ function create_post_form() {
 	myAjax_Request.onreadystatechange = function(){
 		if(myAjax_Request.readyState == 4){
 			var post2quote = jsonParse(myAjax_Request.responseText);
-			var post_content = "\n\n> "+post2quote.text.replace(/(\\r\\n|\\n|\r\n|\n)/g,"\n> ");
+			var post_content = "\n\n> "+post2quote.text.replace(/(\\r\\n\\r|\\r\\n|\\n|\r\n|\n)/g,"\n> ");
 			if (post2quote.post_type.match(/Reshare/i)) {
 				var root_object = post2quote.root;
 				var via_id = post2quote.author.diaspora_id;
@@ -413,7 +424,7 @@ function create_post_form() {
 			
 			post_date = new Date(post_date);
 						
-			var return_content = "\n\n\n\n> ----\n\n<strong> @{![Avatar]("+author_avatar+") "+author_name+" ; "+author_id+"} </strong><sup> ["+post_date.toLocaleString()+"](/posts/"+post_guid+")</sup>\n\n";
+			var return_content = "\n\n\n\n ----\n\n<strong> ![Avatar]("+author_avatar+") @{ "+author_name+" ; "+author_id+"} </strong><sup> ["+post_date.toLocaleString()+"](/posts/"+post_guid+")</sup>\n\n";
 			
 			if (photos.length > 0) {
 				return_content += "> [ !["+photos[0].guid+"]("+photos[0].sizes.large+") ]("+photos[0].sizes.large+")\n\n> ";
@@ -494,7 +505,7 @@ function send_from_singlepost() {
 	statusSendingAjax_Request.setRequestHeader("X-CSRF-Token",document.getElementsByName("csrf-token")[0].getAttribute("content"));
 	
 	var status_message_to_send = document.getElementById("pretext_textarea").value+document.getElementById("quotetext_textarea").value+document.getElementById("posttext_textarea").value;
-	status_message_to_send = status_message_to_send.replace(/\n/g, "\\r\\n\\r").replace(/\"/g, "\\\"");
+	status_message_to_send = status_message_to_send.replace(/\n/g, "\\n").replace(/\"/g, "\\\"");
 	
 	/*
 	alert('{"status_message":{"text":"'+document.getElementById("pretext_textarea").value+document.getElementById("posttext_textarea").value+document.getElementById("quotetext_textarea").value+'"},"aspect_ids":"public","location_coords":""}');
@@ -574,7 +585,7 @@ if (document.getElementById("publisher")) {
 	window.setTimeout(add_quote_stylesheet,700);
 	window.setTimeout(add_quote_buttons,1700);
 	window.setInterval(add_quote_buttons,10500);
-	//alert("3");#
+	//alert("3");
 } else if (document.getElementById("settings_nav")) {	
 	window.setTimeout(do_settings_stuff,1111);
 } else {
