@@ -236,13 +236,16 @@ function quote(quote_btn,clickevent) {
 		temp_element = temp_element.parentNode;
 	}
 	temp_element = temp_element.getElementsByClassName("timeago")[0].parentNode;
-	
+	//console.log("239");
 	var post_id = temp_element.href.match(/(\/posts\/)(\w+)/);
 	post_id = RegExp.$2;
-	 
+	//console.log('242');
 	var myAjax_Request = new XMLHttpRequest();
-	myAjax_Request.open("get", "/posts/"+post_id+".json", true);
+  //console.log('244 '+window.location.protocol+'//'+window.location.host+"/posts/"+post_id+".json");
+	myAjax_Request.open("get", window.location.protocol+'//'+window.location.host+"/posts/"+post_id+".json", true);
+  //console.log('246');
 	myAjax_Request.onreadystatechange = function(){
+    //console.log('248');
 		if(myAjax_Request.readyState == 4){
 			var post2quote = jsonParse(myAjax_Request.responseText);
 			var post_content = "\n\n> "+post2quote.text.replace(/(\\r\\n|\\n|\r\n|\n)/g,"\n> ");
@@ -255,7 +258,9 @@ function quote(quote_btn,clickevent) {
 				var via_id = null;
 				var via_name = null;	
 			}
-			
+      
+      
+			//console.log("263");
 			var author_avatar = root_object.author.avatar.small;
 			var author_id = root_object.author.diaspora_id;
 			var author_name = root_object.author.name;
@@ -281,40 +286,51 @@ function quote(quote_btn,clickevent) {
 			//post_content = post_content.replace(/(^|\n)/g,"$1\> ");
 			
 			//alert(post_content);
-			//console.log('284');			
+			
+      //console.log('290');			
 			document.getElementById("publisher").classList.remove("closed");
-			//console.log('286');
+			
+      
+      
+      //console.log('295');
 			if(document.getElementById("publisher-textarea-wrapper")) {
 				document.getElementById("publisher-textarea-wrapper").classList.add("active");
 			} else if(document.getElementById("publisher_textarea_wrapper")) {
 				document.getElementById("publisher_textarea_wrapper").classList.add("active");
 			}
-			//console.log('288');
+			
+      
+      
+      
+      //console.log('305');
 			//document.getElementById("md-editor").classList.add("active");
-			//console.log('290');
+			
+      
+      
+      //console.log('310');
 			if (document.getElementById("status_message_fake_text")) {
 				var legacy_code_fake_text_exists = true;
-				//console.log('293');
+				//console.log('313');
 			} else {
 				var legacy_code_fake_text_exists = false;
-				//console.log('296');
+				//console.log('316');
 			}
 			
 			if (legacy_code_fake_text_exists) {
 				document.getElementById("status_message_fake_text").value = return_content;
-				//console.log('301');
+				//console.log('321');
 			}
 			document.getElementById("status_message_text").value = return_content;
 
-			//console.log('305');
+			//console.log('325');
 			
 			
 			if (legacy_code_fake_text_exists) {
 				document.getElementById("status_message_fake_text").style.height = (return_content.match(/\n/g).length * 20)+"px";
-				//console.log('310');
+				//console.log('330');
 			} else {
 				document.getElementById("status_message_text").style.height = (return_content.match(/\n/g).length * 20)+"px";				
-				//console.log('313');
+				//console.log('333');
 			}
 			
 			
