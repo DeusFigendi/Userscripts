@@ -5,7 +5,7 @@
 // @include     https://pod.geraspora.de/stream
 // @downloadURL https://github.com/DeusFigendi/Userscripts/raw/master/Diaspora/Quote_Post.user.js
 // @updateURL   https://github.com/DeusFigendi/Userscripts/raw/master/Diaspora/Quote_Post.user.js
-// @version     1.1.7
+// @version     1.1.8
 
 // @grant       GM_getValue
 // @grant       GM_setValue
